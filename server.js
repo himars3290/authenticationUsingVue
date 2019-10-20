@@ -16,9 +16,15 @@ app.get('/', (req, res) => {
   })
 })
 
-app.get('/dashboard', (req, res) => {
-  res.json({
-    events: events
+app.get('/dashboard', verifyToken, (req, res) => { // verifyToken is middleware
+  jwt.verify(req.token, 'the_secret_key', err => { // verifies token
+    if (err) { // if error, respond with 401 code
+      res.sendStatus(401)
+    } else { // otherwise, respond with private data
+      res.json({
+        events: events
+      })
+    }
   })
 })
 
@@ -41,7 +47,7 @@ app.post('/register', (req, res) => {
         if (err) {
           console.log(err + data)
         } else {
-          const token = jwt.sign({ user }, 'the_secret_key')
+          const token = jwt.sign({user}, 'the_secret_key')
           // In a production app, you'll want the secret key to be an environment variable
           res.json({
             token,
@@ -64,7 +70,7 @@ app.post('/login', (req, res) => {
     req.body.email === userInfo.email &&
     req.body.password === userInfo.password
   ) {
-    const token = jwt.sign({ userInfo }, 'the_secret_key')
+    const token = jwt.sign({userInfo}, 'the_secret_key')
     // In a production app, you'll want the secret key to be an environment variable
     res.json({
       token,
@@ -77,7 +83,7 @@ app.post('/login', (req, res) => {
 })
 
 // MIDDLEWARE
-function verifyToken (req, res, next) {
+function verifyToken(req, res, next) {
   const bearerHeader = req.headers['authorization']
 
   if (typeof bearerHeader !== 'undefined') {
