@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form action="">
+    <form @submit.prevent="register">
       <label for="name">
         Name:
       </label>
@@ -32,6 +32,15 @@
         password: ''
       }
     },
+    methods: {
+      register() {
+        this.$store.dispatch('register', {
+          name: this.name,
+          email: this.email,
+          password: this.password,
+        })
+      }
+    }
   }
 </script>
 
