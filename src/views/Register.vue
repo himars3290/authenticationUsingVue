@@ -9,12 +9,12 @@
       <label for="email">
         Email:
       </label>
-      <input type="text" name="email" v-model="email" value>
+      <input type="text" name="email" v-model="email" value autocomplete="username">
 
       <label for="password">
         Password:
       </label>
-      <input type="password" name="password" v-model="password" value>
+      <input type="password" name="password" v-model="password" value autocomplete="current-password">
 
       <button type="submit" name="button">
         Register
@@ -38,6 +38,8 @@
           name: this.name,
           email: this.email,
           password: this.password,
+        }).then( () => {
+          this.$router.push({name: 'dashboard'});
         })
       }
     }
