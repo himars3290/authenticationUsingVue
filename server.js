@@ -39,15 +39,21 @@ app.post('/register', (req, res) => {
 
     const data = JSON.stringify(user, null, 2);
     var dbUserEmail = require('./db/user.json').email;
-
-    if (dbUserEmail === req.body.email) {
-      res.sendStatus(400)
+    var errorsToSend = [];
+    if (dbUserEmail === user.email) { // check to see if email already exists in db
+      errorsToSend.push('An account with this email already exists.')
+    }
+    if (user.password.length < 5) { // validate password is in correct format
+      errorsToSend.push('Password too short.')
+    }
+    if (errorsToSend.length > 0) { // check if there are any errors
+      res.status(400).json({errors: errorsToSend}) // send errors back with status code
     } else {
       fs.writeFile('./db/user.json', data, err => {
         if (err) {
           console.log(err + data)
         } else {
-          const token = jwt.sign({ user }, 'the_secret_key');
+          const token = jwt.sign({user}, 'the_secret_key');
           // In a production app, you'll want the secret key to be an environment variable
           res.json({
             token,

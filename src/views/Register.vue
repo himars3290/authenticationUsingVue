@@ -31,6 +31,11 @@
       <button type="submit" name="button">
         Register
       </button>
+      <ul>
+        <li v-for="(error, index) in errors" :key="index">
+          <p>{{ error }}</p>
+        </li>
+      </ul>
       <router-link to="/login">
         Already have an account? Login
       </router-link>
@@ -44,7 +49,8 @@
       return {
         name: '',
         email: '',
-        password: ''
+        password: '',
+        errors: null
       }
     },
     methods: {
@@ -56,6 +62,10 @@
         }).then( () => {
           this.$router.push({name: 'dashboard'});
         })
+          .catch(err => {
+            console.log(err.message);
+            this.errors = err.response.data.errors
+          })
       }
     }
   }
