@@ -4,17 +4,29 @@
       <label for="name">
         Name:
       </label>
-      <input type="text" name="name" v-model="name" value>
+      <input v-model="name" type="text" name="name" value>
 
       <label for="email">
         Email:
       </label>
-      <input type="text" name="email" v-model="email" value autocomplete="username">
+      <input
+        v-model="email"
+        type="text"
+        name="email"
+        value
+        autocomplete="username"
+      >
 
       <label for="password">
         Password:
       </label>
-      <input type="password" name="password" v-model="password" value autocomplete="current-password">
+      <input
+        v-model="password"
+        type="password"
+        name="password"
+        value
+        autocomplete="current-password"
+      >
 
       <button type="submit" name="button">
         Register

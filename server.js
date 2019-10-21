@@ -64,13 +64,13 @@ app.post('/register', (req, res) => {
 
 app.post('/login', (req, res) => {
   const userDB = fs.readFileSync('./db/user.json')
-  const userInfo = JSON.parse(userDB)
+  const userInfo = JSON.parse(userDB);
   if (
     req.body &&
     req.body.email === userInfo.email &&
     req.body.password === userInfo.password
   ) {
-    const token = jwt.sign({userInfo}, 'the_secret_key')
+    const token = jwt.sign({userInfo}, 'the_secret_key');
     // In a production app, you'll want the secret key to be an environment variable
     res.json({
       token,
