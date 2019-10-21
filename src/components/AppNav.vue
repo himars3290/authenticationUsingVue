@@ -3,12 +3,15 @@
     <router-link to="/">
       Home
     </router-link>
-    <router-link to="/dashboard">
+    <router-link v-if="loggedIn" to="/dashboard">
       Dashboard
     </router-link>
     <router-link v-if="!loggedIn" class="button" to="/login">
       Login
     </router-link>
+    <button v-else type="button" class="logoutButton" @click="logout">
+      Logout
+    </button>
   </div>
 </template>
 
@@ -18,6 +21,11 @@
   export default {
     computed: {
       ...authComputed
+    },
+    methods: {
+      logout() {
+        this.$store.dispatch('logout')
+      }
     }
   }
 </script>
