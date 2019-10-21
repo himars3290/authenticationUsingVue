@@ -12,6 +12,9 @@
       <button type="submit" name="button">
         Login
       </button>
+      <router-link to="/register">
+        Don't have an account? Register
+      </router-link>
     </form>
   </div>
 </template>
@@ -29,7 +32,7 @@
         this.$store.dispatch("login", {
           email: this.email,
           password: this.password
-        }).then(()=> {
+        }).then(() => {
           this.$router.push({name: "dashboard"})
         })
       }
